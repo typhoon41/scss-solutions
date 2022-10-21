@@ -31,14 +31,15 @@ steps:
 - script: |
     npm pack
       displayName: 'Package package'
-    - task: CopyFiles@2
-      inputs:
-          contents: '*.tgz'
-          targetFolder: $(Build.ArtifactStagingDirectory)
-      displayName: 'Copy archives to artifacts staging directory'
 
-    - task: PublishBuildArtifacts@1
-      inputs:
-          path: $(Build.ArtifactStagingDirectory)
-          artifact: package
-      displayName: 'Publish artifacts'
+- task: CopyFiles@2
+  displayName: 'Copy archives to artifacts staging directory'
+  inputs:
+    contents: '*.tgz'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifacts'
+  inputs:
+    path: $(Build.ArtifactStagingDirectory)
+    artifact: package
