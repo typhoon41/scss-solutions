@@ -27,3 +27,18 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run build'
+  
+- script: |
+    npm pack
+      displayName: 'Package package'
+    - task: CopyFiles@2
+      inputs:
+          contents: '*.tgz'
+          targetFolder: $(Build.ArtifactStagingDirectory)
+      displayName: 'Copy archives to artifacts staging directory'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+          path: $(Build.ArtifactStagingDirectory)
+          artifact: package
+      displayName: 'Publish artifacts'
