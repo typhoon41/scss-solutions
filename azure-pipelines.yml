@@ -26,10 +26,4 @@ steps:
   displayName: 'Build'
   inputs:
     command: 'custom'
-    customCommand: 'run build'    
-
-- task: Npm@1
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: 'NPM - typhoon41'
+    customCommand: 'run build'
