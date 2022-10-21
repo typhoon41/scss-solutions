@@ -1,0 +1,66 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/position/absolute';
+
+@include true.describe('zero-position($top, $right, $bottom, $left)') {
+	@include true.it('should default to zero-based if position not provided') {
+		@include true.assert() {
+			@include true.output() {
+				@include absolute.zero-position();
+			}
+			@include true.expect() {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+		}
+	}
+
+	@include true.it('should set position to given in right order, without any zeros') {
+		@include true.assert() {
+			@include true.output() {
+				@include absolute.zero-position(5px, 3em, 14rem, -8px);
+			}
+			@include true.expect() {
+				position: absolute;
+				top: 5px;
+				right: 3em;
+				bottom: 14rem;
+				left: -8px;
+			}
+		}
+	}
+}
+
+@include true.describe('unset-position($top, $right, $bottom, $left)') {
+	@include true.it('should default to unset-based if position not provided') {
+		@include true.assert() {
+			@include true.output() {
+				@include absolute.unset-position();
+			}
+			@include true.expect() {
+				position: absolute;
+				top: unset;
+				right: unset;
+				bottom: unset;
+				left: unset;
+			}
+		}
+	}
+
+	@include true.it('should set position to given in right order') {
+		@include true.assert() {
+			@include true.output() {
+				@include absolute.unset-position(5px, 3em, 14rem);
+			}
+			@include true.expect() {
+				position: absolute;
+				top: 5px;
+				right: 3em;
+				bottom: 14rem;
+				left: unset;
+			}
+		}
+	}
+}

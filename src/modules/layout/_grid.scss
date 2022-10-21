@@ -1,0 +1,80 @@
+$breakpoints: () !default;
+
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:math';
+@use '../variables' as variables;
+@forward '../responsiveness/breakpoints' with (
+	$breakpoints: $breakpoints
+);
+@use '../responsiveness/breakpoints';
+@use '../text/modification' as text-modification;
+@use 'grid-core';
+
+@if length($breakpoints) == 0 {
+	$breakpoints: variables.$default-breakpoints;
+}
+
+$column-prefix: 'column-';
+$offset-prefix: 'offset-';
+
+@mixin generate($divisions: 12) {
+	@if type-of($divisions) != number {
+		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
+	}
+
+	@if ($divisions < 2 or $divisions > 1000) {
+		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
+	}
+
+	@include grid-core.generate($column-prefix, $offset-prefix);
+	@include -unresponsive-grid-from($divisions);
+	@include -responsive-grid-from($divisions);
+}
+
+@function -calculate-ratio($counter, $divisions) {
+	@return math.div(100% * $counter, $divisions);
+}
+
+@mixin -unresponsive-grid-from($divisions) {
+	$division-limit: $divisions + 1;
+
+	@for $currentIndex from 1 to ($division-limit) {
+		$current-ratio: -calculate-ratio($currentIndex, $divisions);
+
+		#{'.' + $column-prefix + $currentIndex} {
+			flex: 0 0 auto;
+			width: $current-ratio;
+		}
+
+		#{'.' + $offset-prefix + $currentIndex} {
+			margin-left: $current-ratio;
+		}
+	}
+}
+
+@mixin -responsive-grid-from($divisions) {
+	$division-limit: $divisions + 1;
+	@each $size, $value in $breakpoints {
+		@include breakpoints.apply-on($item) {
+			#{'.' + $column-prefix + $size}-auto {
+				flex: 0 0 auto;
+				width: auto;
+			}
+
+			@for $currentIndex from 1 to $division-limit {
+				$current-ratio: -calculate-ratio($currentIndex, $divisions);
+				$size-index-suffix: $size + '-' + $currentIndex;
+
+				#{'.' + $column-prefix + $size-index-suffix} {
+					flex: 0 0 auto;
+					width: $current-ratio;
+				}
+
+				#{'.' + $offset-prefix + $size-index-suffix} {
+					margin-left: $current-ratio;
+				}
+			}
+		}
+	}
+}

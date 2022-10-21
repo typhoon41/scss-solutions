@@ -1,0 +1,30 @@
+{
+  "name": "@typhoon41/scss-solutions",
+  "version": "1.0.0",
+  "author": "Nikola Dragićević",
+  "description": "Nikola Dragićević's shareable utilities for SCSS projects.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-solutions.css",
+    "lint": "stylelint --fix src/**/*.scss",
+    "test": "jest --coverage --colors"
+  },
+  "devDependencies": {
+    "sass": "1.55.0",
+    "sass-true": "6.1.0",
+    "jest": "29.2.1",
+    "stylelint": "14.14.0",
+    "postcss-scss": "4.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typhoon41/scss-solutions.git"
+  },
+  "keywords": [
+    "SCSS","CSS", "utilities", "solutions", "grid", "breakpoints", "ellipsis"
+  ],
+  "bugs": {
+    "url": "https://github.com/typhoon41/scss-solutions/issues"
+  },
+  "homepage": "https://github.com/typhoon41/scss-solutions#readme"
+}

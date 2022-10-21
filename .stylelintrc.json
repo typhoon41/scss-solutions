@@ -1,0 +1,9 @@
+{
+    "customSyntax": "postcss-scss",
+    "rules": {
+      "value-keyword-case": [
+        "lower",
+        { "ignoreKeywords": ["largeDesktop"] }
+      ]
+    }
+}

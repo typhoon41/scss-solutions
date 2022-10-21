@@ -1,0 +1,7 @@
+$testing: false !default;
+$default-breakpoints: ( 
+	mobile: ( size: 576px ), 
+	tablet: ( size: 768px ), 
+	laptop: ( size: 992px ), 
+	desktop: ( size: 1200px ),
+	4k: ( size: 1400px ));
