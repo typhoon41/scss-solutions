@@ -27,10 +27,12 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run build'
-  
-- script: |
-    npm pack
-      displayName: 'Package package'
+
+- task: Npm@1
+  displayName: 'Package package'
+  inputs:
+    command: 'custom'
+    customCommand: 'pack'
 
 - task: CopyFiles@2
   displayName: 'Copy archives to artifacts staging directory'
