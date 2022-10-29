@@ -40,12 +40,6 @@ steps:
     contents: '*.tgz'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
-- task: CopyFiles@2
-  displayName: 'Copy .npmrc'
-  inputs:
-    contents: '.npmrc'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
   inputs:
