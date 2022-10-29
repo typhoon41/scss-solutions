@@ -28,6 +28,10 @@ steps:
     command: 'custom'
     customCommand: 'run build'
 
+- task: npmAuthenticate@0
+  inputs:
+    workingFile: .npmrc
+    
 - task: Npm@1
   displayName: 'Package package'
   inputs:
