@@ -28,10 +28,6 @@ steps:
     command: 'custom'
     customCommand: 'run build'
 
-- task: npmAuthenticate@0
-  inputs:
-    workingFile: .npmrc
-    
 - task: Npm@1
   displayName: 'Package package'
   inputs:
@@ -42,6 +38,12 @@ steps:
   displayName: 'Copy archives to artifacts staging directory'
   inputs:
     contents: '*.tgz'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: CopyFiles@2
+  displayName: 'Copy .npmrc'
+  inputs:
+    contents: '.npmrc'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
