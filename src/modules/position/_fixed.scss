@@ -1,0 +1,5 @@
+@use 'core';
+
+@mixin zero-position($top: 0, $right: 0, $bottom: 0, $left: 0) {
+	@include core.set-position($top, $right, $bottom, $left, fixed);
+}

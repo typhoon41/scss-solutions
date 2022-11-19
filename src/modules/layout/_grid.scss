@@ -1,3 +1,4 @@
+/* stylelint-disable-next-line annotation-no-unknown */
 $breakpoints: () !default;
 
 @use 'sass:string';
@@ -8,7 +9,6 @@ $breakpoints: () !default;
 	$breakpoints: $breakpoints
 );
 @use '../responsiveness/breakpoints';
-@use '../text/modification' as text-modification;
 @use 'grid-core';
 
 @if length($breakpoints) == 0 {

@@ -1,9 +1,3 @@
 {
-    "customSyntax": "postcss-scss",
-    "rules": {
-      "value-keyword-case": [
-        "lower",
-        { "ignoreKeywords": ["largeDesktop"] }
-      ]
-    }
+  "extends": "@typhoon41/stylelint-config"
 }
