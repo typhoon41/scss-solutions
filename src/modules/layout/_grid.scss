@@ -56,7 +56,7 @@ $offset-prefix: 'offset-';
 @mixin -responsive-grid-from($divisions) {
 	$division-limit: $divisions + 1;
 	@each $size, $value in $breakpoints {
-		@include breakpoints.apply-on($item) {
+		@include breakpoints.apply-on($size) {
 			#{'.' + $column-prefix + $size}-auto {
 				flex: 0 0 auto;
 				width: auto;
