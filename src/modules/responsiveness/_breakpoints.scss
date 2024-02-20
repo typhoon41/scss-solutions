@@ -12,16 +12,18 @@ $breakpoints: () !default;
 }
 
 @mixin set-up() {
-	@each $breakpoint, $value in $breakpoints {
-		$currentIndex: list.index($breakpoints, ($breakpoint $value));
+	body::before {
+		@each $breakpoint, $value in $breakpoints {
+			$currentIndex: list.index($breakpoints, ($breakpoint $value));
 
-		@if $currentIndex == 1 {
-			@include string.quote($breakpoint);
-			display: none;
-		}
-		@else {
-			@include apply-on($breakpoint) {
-				@include string.quote($breakpoint);
+			@if $currentIndex == 1 {
+				content: string.quote($breakpoint);
+				display: none;
+			}
+			@else {
+				@include apply-on($breakpoint) {
+					content: string.quote($breakpoint);
+				}
 			}
 		}
 	}
