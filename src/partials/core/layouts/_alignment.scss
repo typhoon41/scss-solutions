@@ -13,6 +13,14 @@
 	}
 }
 
+.stretch-equally {
+	justify-content: space-evenly;
+}
+
+.stretch-between {
+	justify-content: space-between;
+}
+
 .vertical-stack {
 	flex-direction: column;
 }
