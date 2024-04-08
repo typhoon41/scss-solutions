@@ -7,7 +7,7 @@
 		flex-wrap: wrap;
 
 		/* stylelint-disable-next-line selector-max-attribute */
-		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
+		[class*=#{$column-prefix}], [class*=#{$offset-prefix}] {
 			box-sizing: border-box;
 			flex-shrink: 0;
 			max-width: 100%;
