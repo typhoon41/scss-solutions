@@ -3,15 +3,17 @@ $breakpoints: () !default;
 
 @use 'sass:string';
 @use 'sass:map';
+@use 'sass:list';
 @use 'sass:math';
-@use '../variables' as variables;
+@use 'sass:meta';
+@use '../variables';
 @forward '../responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
 @use '../responsiveness/breakpoints';
 @use 'grid-core';
 
-@if length($breakpoints) == 0 {
+@if list.length($breakpoints) == 0 {
 	$breakpoints: variables.$default-breakpoints;
 }
 
@@ -19,7 +21,7 @@ $column-prefix: 'column-';
 $offset-prefix: 'offset-';
 
 @mixin generate($divisions: 12) {
-	@if type-of($divisions) != number {
+	@if meta.type-of($divisions) != number {
 		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
 	}
 

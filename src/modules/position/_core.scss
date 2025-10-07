@@ -1,7 +1,4 @@
 @mixin set-position($top, $right, $bottom, $left, $position: absolute) {
 	position: $position;
-	top: $top;
-	right: $right;
-	bottom: $bottom;
-	left: $left;
+	inset: $top $right $bottom $left;
 }

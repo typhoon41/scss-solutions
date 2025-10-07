@@ -2,8 +2,8 @@
 
 ## Installation
 
-```
-$ npm install --save-dev @typhoon41/scss-solutions
+```bash
+npm install --save-dev @typhoon41/scss-solutions
 ```
 
 ## How to use it
