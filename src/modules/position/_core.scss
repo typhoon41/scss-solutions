@@ -1,4 +1,8 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
 @mixin set-position($top, $right, $bottom, $left, $position: absolute) {
 	position: $position;
-	inset: $top $right $bottom $left;
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
 }
