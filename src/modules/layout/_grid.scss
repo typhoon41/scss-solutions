@@ -26,7 +26,7 @@ $offset-prefix: 'offset-';
 	}
 
 	@if ($divisions < 2 or $divisions > 1000) {
-		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
+		@error 'Please provide a number of divisions between 2 and 1000! Given value: ' + $divisions;
 	}
 
 	@include grid-core.generate($column-prefix, $offset-prefix);
