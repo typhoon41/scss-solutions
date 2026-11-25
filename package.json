@@ -15,11 +15,10 @@
     "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-solutions.css",
     "lint": "stylelint --fix \"src/**/*.scss\" \"tests/**/*.scss\"",
     "lint-check": "stylelint \"src/**/*.scss\" \"tests/**/*.scss\"",
-    "test": "jest --coverage --colors"
+    "test": "jest --colors"
   },
   "devDependencies": {
     "@typhoon41/stylelint-config": "1.1.2",
-    "glob": "^11.0.3",
     "jest": "30.2.0",
     "sass": "1.93.2",
     "sass-true": "9.0.0"

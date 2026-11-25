@@ -3,10 +3,6 @@ module.exports = {
         "<rootDir>/tests/"
     ],
     "setupFiles": [],
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-        "**/*.scss"
-    ],
     "transform": {},
     "transformIgnorePatterns": [
         "<rootDir>/node_modules/"
