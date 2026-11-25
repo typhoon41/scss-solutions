@@ -1,47 +1,43 @@
+# Builds every push and PR; publishes to npmjs.org when a merge to main bumps the version in package.json,
+# after approval in the 'package-release' environment (toolkit release/docs/ADOPTING.md).
+
 trigger:
-- main
+  branches:
+    include: [ main ]
 
-pool:
-  vmImage: ubuntu-latest
+pr:
+  branches:
+    include: [ main ]
 
-steps:
-- task: Npm@1
-  displayName: 'Install npm packages'
-  inputs:
-    command: 'install'
+lockBehavior: sequential           # with the environment's exclusive lock: releases never overlap
 
-- task: Npm@1
-  displayName: 'Execute linters'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint'
+resources:
+  repositories:
+    - repository: toolkit
+      type: github
+      name: typhoon41/toolkit
+      endpoint: typhoon41
 
-- task: Npm@1
-  displayName: 'Execute tests'
-  inputs:
-    command: 'custom'
-    customCommand: 'run test'
-
-- task: Npm@1
-  displayName: 'Build'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
-
-- task: Npm@1
-  displayName: 'Package package'
-  inputs:
-    command: 'custom'
-    customCommand: 'pack'
-
-- task: CopyFiles@2
-  displayName: 'Copy archives to artifacts staging directory'
-  inputs:
-    contents: '*.tgz'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish artifacts'
-  inputs:
-    path: $(Build.ArtifactStagingDirectory)
-    artifact: package
+stages:
+  - template: release/templates/stages/package-release.yml@toolkit
+    parameters:
+      releaseNotes: true
+      environment: package-release
+      releaseVariableGroup: ''                   # both service connections below replace the secrets
+      npmServiceConnection: 'NPM - typhoon41'
+      useGitHubServiceConnection: true
+      npmAccess: public
+      enforceCommitConvention: true
+      buildSteps:
+        - task: NodeTool@0
+          displayName: Install Node
+          inputs:
+            versionSpec: 22.x
+        - pwsh: npm ci
+          displayName: Install packages
+        - pwsh: npm run lint-check
+          displayName: Lint
+        - pwsh: npm test
+          displayName: Test
+        - pwsh: npm run build         # dist/ is packed into the tarball
+          displayName: Build

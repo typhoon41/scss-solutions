@@ -1,17 +1,24 @@
 {
   "name": "@typhoon41/scss-solutions",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Nikola Dragićević",
   "description": "Nikola Dragićević's shareable utilities for SCSS projects.",
   "license": "Apache-2.0",
+  "files": [
+    "src",
+    "dist",
+    "docs"
+  ],
+  "style": "dist/scss-solutions.css",
+  "sass": "src/main.scss",
   "scripts": {
     "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-solutions.css",
-    "lint": "stylelint --fix src/**/*.scss",
-    "test": "jest --coverage --colors"
+    "lint": "stylelint --fix \"src/**/*.scss\" \"tests/**/*.scss\"",
+    "lint-check": "stylelint \"src/**/*.scss\" \"tests/**/*.scss\"",
+    "test": "jest --colors"
   },
   "devDependencies": {
     "@typhoon41/stylelint-config": "1.1.2",
-    "glob": "^11.0.3",
     "jest": "30.2.0",
     "sass": "1.93.2",
     "sass-true": "9.0.0"
