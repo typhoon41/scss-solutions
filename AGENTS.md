@@ -21,7 +21,7 @@ npm ci                  # install; the lockfile resolves from registry.npmjs.org
 npm run lint            # stylelint with --fix over src/ and tests/
 npm test                # sass-true specs (tests/**/*.tests.scss) run through jest
 npm run build           # compile src/main.scss to dist/scss-solutions.css
-npm pack --dry-run      # the tarball must hold only src/, dist/, package.json, README.md, LICENSE
+npm pack --dry-run      # the tarball must hold only src/, dist/, docs/, package.json, README.md, LICENSE
 ```
 
 CI runs the lint without `--fix`, then the tests and the build.

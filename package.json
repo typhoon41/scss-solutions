@@ -4,6 +4,13 @@
   "author": "Nikola Dragićević",
   "description": "Nikola Dragićević's shareable utilities for SCSS projects.",
   "license": "Apache-2.0",
+  "files": [
+    "src",
+    "dist",
+    "docs"
+  ],
+  "style": "dist/scss-solutions.css",
+  "sass": "src/main.scss",
   "scripts": {
     "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-solutions.css",
     "lint": "stylelint --fix \"src/**/*.scss\" \"tests/**/*.scss\"",
