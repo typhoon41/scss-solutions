@@ -6,7 +6,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-solutions.css",
-    "lint": "stylelint --fix src/**/*.scss",
+    "lint": "stylelint --fix \"src/**/*.scss\" \"tests/**/*.scss\"",
+    "lint-check": "stylelint \"src/**/*.scss\" \"tests/**/*.scss\"",
     "test": "jest --coverage --colors"
   },
   "devDependencies": {
