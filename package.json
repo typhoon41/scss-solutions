@@ -1,6 +1,6 @@
 {
   "name": "@typhoon41/scss-solutions",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "Nikola Dragićević",
   "description": "Nikola Dragićević's shareable utilities for SCSS projects.",
   "license": "Apache-2.0",
@@ -18,10 +18,10 @@
     "test": "jest --colors"
   },
   "devDependencies": {
-    "@typhoon41/stylelint-config": "1.1.2",
-    "jest": "30.2.0",
-    "sass": "1.93.2",
-    "sass-true": "9.0.0"
+    "@typhoon41/stylelint-config": "1.2.0",
+    "jest": "30.5.2",
+    "sass": "1.108.2",
+    "sass-true": "10.1.0"
   },
   "repository": {
     "type": "git",
