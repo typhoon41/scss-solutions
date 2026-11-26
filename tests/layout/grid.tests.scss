@@ -1,0 +1,96 @@
+// stylelint-disable media-feature-range-notation -- expectations mirror the emitted CSS
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/layout/grid' with (
+	$breakpoints: (tablet: (size: 768px))
+);
+
+@include true.describe('generate($divisions)') {
+	@include true.it('should generate core, column, offset and responsive classes for configured breakpoints') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include grid.generate(2);
+			}
+			@include true.expect($selector: false) {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+				}
+
+				#{'.row [class*=column-], .row [class*=offset-]'} {
+					box-sizing: border-box;
+					flex-shrink: 0;
+					max-width: 100%;
+				}
+
+				.column-auto {
+					flex: 0 0 auto;
+					width: auto;
+				}
+
+				.column-1 {
+					flex: 0 0 auto;
+					width: 50%;
+				}
+
+				.offset-1 {
+					margin-left: 50%;
+				}
+
+				.column-2 {
+					flex: 0 0 auto;
+					width: 100%;
+				}
+
+				.offset-2 {
+					margin-left: 100%;
+				}
+
+				@media only screen and (min-width: 768px) {
+					.column-tablet-auto {
+						flex: 0 0 auto;
+						width: auto;
+					}
+
+					.column-tablet-1 {
+						flex: 0 0 auto;
+						width: 50%;
+					}
+
+					.offset-tablet-1 {
+						margin-left: 50%;
+					}
+
+					.column-tablet-2 {
+						flex: 0 0 auto;
+						width: 100%;
+					}
+
+					.offset-tablet-2 {
+						margin-left: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('apply-on($given-size) forwarded through grid') {
+	@include true.it('should use breakpoints configured on grid') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include grid.apply-on(tablet) {
+					.box {
+						order: 1;
+					}
+				}
+			}
+			@include true.expect($selector: false) {
+				@media only screen and (min-width: 768px) {
+					.box {
+						order: 1;
+					}
+				}
+			}
+		}
+	}
+}
