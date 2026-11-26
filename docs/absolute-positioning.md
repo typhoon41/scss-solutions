@@ -1,27 +1,34 @@
-# Absolute positioning methods
+# Absolute positioning
 
-Alignment utilities for absolute positioning of content.
+One-liners for the most common absolute positioning declarations.
 
-## Absolute
-
-@use scss-solutions/src/modules/position/absolute;
-
-- Replaces the several most common lines in absolute positioning with just one liner.
-```
-@include absolute.zero-position($top, $right, $bottom, $left);
-```
-All arguments are optional and default to 0. Sets following properties:
-```
-	position: absolute;
-	top: $top;
-	right: $right;
-	bottom: $bottom;
-	left: $left;
+```scss
+@use '@typhoon41/scss-solutions/src/modules/position/absolute';
 ```
 
-- Replaces the several most common lines in absolute positioning for unset values with just one liner.
-```
-@include absolute.unset-position($top, $right, $bottom, $left);
-```
-All arguments are optional and default to unset. Sets the same properties as in previous method.
+## zero-position($top, $right, $bottom, $left)
 
+All arguments are optional and default to `0`.
+
+```scss
+@include absolute.zero-position(); // covers the positioned parent
+@include absolute.zero-position($bottom: auto); // pins to the top edge
+```
+
+Outputs:
+
+```scss
+position: absolute;
+top: $top;
+right: $right;
+bottom: $bottom;
+left: $left;
+```
+
+## unset-position($top, $right, $bottom, $left)
+
+All arguments are optional and default to `unset`. Outputs the same declarations as `zero-position`.
+
+```scss
+@include absolute.unset-position($top: 0, $right: 0); // top right corner
+```

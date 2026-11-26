@@ -1,23 +1,70 @@
-# Breakpoints methods
+# Breakpoints
 
-Utilities related with application's breakpoints.
+Mobile-first media queries driven by one breakpoint map.
 
-## Breakpoints
-
-This module has overridable breakpoints variable. Due to Sass limitations, there should be only one (wrapper) @use/@forward of this utility in your application in order to prevent side effects and to have easier work.
-Breakpoints must be in the same format as variables inside src root folder.
-
-Usage:
-@use scss-foundation/src/responsiveness/breakpoints;
-
-- Applies desired styles and properties starting from certain breakpoint given by its key. Key must be valid key from given (or default) breakpoint collection.
-```
-@include breakpoints.apply-on($given-size);
+```scss
+@use '@typhoon41/scss-solutions/src/modules/responsiveness/breakpoints';
 ```
 
-- Sets up breakpoints in a way so you can pass them to the JS from HTML. This is needed so you could have them defined only in SCSS after which you can apply some logic in JS based on that, but with only one spot for future maintenance.
+## Breakpoint map
+
+Each key names a breakpoint and holds its minimum width in `size`. The defaults (`src/modules/_variables.scss`) are:
+
+```scss
+(
+	mobile: ( size: 576px ),
+	tablet: ( size: 768px ),
+	laptop: ( size: 992px ),
+	desktop: ( size: 1200px ),
+	4k: ( size: 1400px )
+)
 ```
-@include breakpoints.set-up($with-capitalization);
+
+To override them, configure the module. Sass lets a module be configured only once per compilation, so do it in one
+wrapper module of your application and `@use` that wrapper everywhere else:
+
+```scss
+// _breakpoints.scss in your application
+@forward '@typhoon41/scss-solutions/src/modules/responsiveness/breakpoints' with (
+	$breakpoints: (
+		phone: ( size: 480px ),
+		tablet: ( size: 768px ),
+		desktop: ( size: 1200px )
+	)
+);
 ```
-Mixin defines set of properties that must be added to a certain HTML container, ideally the root one. Whatever the width of display device is, content property of it is gonna hold descriptive name for it and you can process that kind of enum insided JS and apply some logic.
-$with-capitalization argument is optional (default = true), since we're mostly using TypeScript + Angular Material which enforces capitalization.
+
+If you also use the [grid](./grid.md), configure the grid module instead. It forwards `apply-on` and `set-up` with the
+same breakpoints.
+
+## apply-on($given-size)
+
+Applies the content from the given breakpoint upwards. `$given-size` must be a key of the breakpoint map. Any other
+value fails compilation, and the error lists the valid keys.
+
+```scss
+.menu {
+	display: none;
+
+	@include breakpoints.apply-on(tablet) {
+		display: flex;
+	}
+}
+```
+
+Outputs `@media only screen and (min-width: 768px) { .menu { display: flex; } }`.
+
+## set-up()
+
+Exposes the active breakpoint to JavaScript, so the breakpoints are defined only in SCSS. It sets the `content` of
+`body::before` to the name of the widest breakpoint that matches the viewport. The pseudo-element stays hidden.
+
+```scss
+@include breakpoints.set-up();
+```
+
+```ts
+const breakpoint = getComputedStyle(document.body, '::before').content.replaceAll('"', '');
+```
+
+Below its own size, the first breakpoint in the map is still reported, so it doubles as the smallest-screen value.

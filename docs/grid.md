@@ -1,40 +1,55 @@
+# Grid
 
-# Grid methods
+A flexbox grid with column and offset classes for every breakpoint, in the spirit of Bootstrap.
 
-Grid heavily depends on breakpoints utilities since there's not much sense in making grid without them. On the other hand, in rare occasions if you just need row styles with auto width, independent core grid utilities might be just enough. In majority of cases, this utility is already the part of full grid so there's no need to use it manually.
+## Full grid
 
-## Grid
+```scss
+@use '@typhoon41/scss-solutions/src/modules/layout/grid';
 
-This module has overridable breakpoints variable. Due to Sass limitations, there should be only one (wrapper) @use/@forward of this utility in your application in order to prevent side effects and to have easier work.
-Breakpoints must be in the same format as variables inside src root folder.
-
-@use scss-foundation/src/layout/grid;
-
-- Full grid generation. It generates everything from core grid plus all column/offset classes using syntax from Bootstrap 5, classes like col-sm-4, offset-md-10.
+@include grid.generate(); // 12 divisions
+@include grid.generate(24); // any whole number from 2 to 1000
 ```
-@include grid.generate(); // or @include grid.generate($divisions);
+
+The grid uses the [breakpoint map](./breakpoints.md#breakpoint-map). To override it, configure the grid once in a
+wrapper module. The grid forwards the breakpoints module, so `apply-on` and `set-up` come with it:
+
+```scss
+// _breakpoints.scss in your application
+@forward '@typhoon41/scss-solutions/src/modules/layout/grid' with (
+	$breakpoints: (
+		tablet: ( size: 768px ),
+		desktop: ( size: 1200px )
+	)
+);
 ```
-Default grid (as in Bootstrap) has 12 columns, but you can change that by passing a positive number parameter (between 2 and 1000).
+
+For `$divisions` = N and every breakpoint key `<size>`, `generate` outputs:
+
+| Class | Effect |
+| --- | --- |
+| `.row` | flex container that wraps; elements inside it with a column or offset class get `box-sizing: border-box`, `flex-shrink: 0` and `max-width: 100%` |
+| `.column-auto` | width fits the content |
+| `.column-1` … `.column-N` | width of 1/N … N/N of the row |
+| `.offset-1` … `.offset-N` | left margin of 1/N … N/N of the row |
+| `.column-<size>-auto` | width fits the content from `<size>` up |
+| `.column-<size>-1` … `.column-<size>-N` | column width from `<size>` up |
+| `.offset-<size>-1` … `.offset-<size>-N` | left margin from `<size>` up |
+
+For example, with the default breakpoints, `column-12 column-tablet-6 column-desktop-4` is full width on phones, half
+width from 768px and a third from 1200px.
+
+`generate` fails compilation if `$divisions` is not a number or is outside 2–1000.
 
 ## Grid core
 
-@use scss-foundation/src/layout/grid-core as grid;
+Only the row and the auto-width column, without breakpoints. The full grid already includes it.
 
- - Core generation creates styles for rows and auto width of content. You must pass prefixes for column and offset class names.
-```
-@include grid.generate($column-prefix, $offset-prefix);
+```scss
+@use '@typhoon41/scss-solutions/src/modules/layout/grid-core';
+
+@include grid-core.generate('column-', 'offset-');
 ```
 
-- Reverse row generation. Integrated in full grid, but this can be also added independently if needed in your application. 
-```
-@include grid.generate-reverse-row($breakpoints);
-```
-Breakpoints are required parameter. Expected format of breakpoints is a map/dictionary with keys being unique and something descriptive to you (i.e. mobile) and value being an object defined with size (in pixels) and string description that will be seen in CSS output (i.e. sm).
-In other words:
-    **mobile: ( size: 576px, description: 'sm' )**
-For more details, please check the format of breakpoint variable inside src root folder.
- 
-This method generates classes which helps you reverse order in row; i.e. if row had divs A, B, C and you apply reverse row class, order will be C, B, A. There are two options: 
-1) .reverse-row-DESIRED_BREAKPOINT_DESCRIPTION
-2) .reverse-dow-under-DESIRED_BREAKPOINT_DESCRIPTION
-The first one helps you to reverse order starting from given breakpoint (DESIRED_BREAKPOINT_DESCRIPTION might be sm, md, xxl, depending on what you pass as a breakpoint description). The second one helps you to reverse order on all widths under certain breakpoint.
+Both prefixes are required. The column prefix names the `.<column-prefix>auto` class, and `.row` uses both prefixes to
+find the columns and offsets inside it.
