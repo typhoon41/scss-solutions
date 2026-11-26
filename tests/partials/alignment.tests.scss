@@ -1,0 +1,35 @@
+@use 'sass:meta';
+@use '../../node_modules/sass-true/sass/true';
+
+@include true.describe('alignment classes') {
+	@include true.it('should generate flex alignment classes') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include meta.load-css('../../src/partials/core/layouts/alignment');
+			}
+			@include true.expect($selector: false) {
+				.aligned-centrally, .center-content {
+					display: flex;
+					align-items: center;
+				}
+
+				.center-content::before, .center-content::after {
+					content: '';
+					margin: auto;
+				}
+
+				.stretch-equally {
+					justify-content: space-evenly;
+				}
+
+				.stretch-between {
+					justify-content: space-between;
+				}
+
+				.vertical-stack {
+					flex-direction: column;
+				}
+			}
+		}
+	}
+}
