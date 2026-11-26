@@ -1,9 +1,7 @@
 {
-    "cSpell.words": [
-        "stylelint"
-    ],
     "workbench.tree.indent": 25,
     "css.validate": false,
+    "less.validate": false,
     "scss.validate": false,
     "stylelint.enable": true,
     "stylelint.validate": [
@@ -33,6 +31,15 @@
     "workbench.editor.wrapTabs": true,
     "workbench.editor.tabSizing": "fit",
     "git.openRepositoryInParentFolders": "never",
+    "cSpell.words": [
+        "stylelint"
+    ],
     "files.autoSaveDelay": 500,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/dist": true,
+        "coverage": true
+    }
 }
