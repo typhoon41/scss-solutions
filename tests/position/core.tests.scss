@@ -1,0 +1,35 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/position/core';
+
+@include true.describe('set-position($top, $right, $bottom, $left, $position)') {
+	@include true.it('should default to absolute position') {
+		@include true.assert() {
+			@include true.output() {
+				@include core.set-position(1px, 2px, 3px, 4px);
+			}
+			@include true.expect() {
+				position: absolute;
+				top: 1px;
+				right: 2px;
+				bottom: 3px;
+				left: 4px;
+			}
+		}
+	}
+
+	@include true.it('should use given position') {
+		@include true.assert() {
+			@include true.output() {
+				@include core.set-position(0, auto, unset, 50%, sticky);
+			}
+			@include true.expect() {
+				position: sticky;
+				top: 0;
+				right: auto;
+				bottom: unset;
+				left: 50%;
+			}
+		}
+	}
+}

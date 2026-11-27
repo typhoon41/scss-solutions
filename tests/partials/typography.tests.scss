@@ -1,0 +1,19 @@
+@use 'sass:meta';
+@use '../../node_modules/sass-true/sass/true';
+
+@include true.describe('typography classes') {
+	@include true.it('should truncate overflowing text with ellipsis') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include meta.load-css('../../src/partials/core/states/typography');
+			}
+			@include true.expect($selector: false) {
+				.ellipsis {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
+		}
+	}
+}

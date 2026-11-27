@@ -4,7 +4,7 @@
 }
 
 .center-content {
-	/* stylelint-disable-next-line scss/at-extend-no-missing-placeholder */
+	// stylelint-disable-next-line scss/at-extend-no-missing-placeholder
 	@extend .aligned-centrally;
 
 	&::before, &::after {

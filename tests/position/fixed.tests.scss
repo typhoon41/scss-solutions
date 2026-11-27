@@ -1,0 +1,50 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/position/fixed';
+
+@include true.describe('zero-position($top, $right, $bottom, $left)') {
+	@include true.it('should default to zero-based fixed position if position not provided') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.zero-position();
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+		}
+	}
+
+	@include true.it('should set position to given in right order') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.zero-position(5px, 3em, 14rem, -8px);
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 5px;
+				right: 3em;
+				bottom: 14rem;
+				left: -8px;
+			}
+		}
+	}
+
+	@include true.it('should keep zero for sides not provided') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.zero-position($bottom: 2rem);
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 2rem;
+				left: 0;
+			}
+		}
+	}
+}

@@ -1,4 +1,4 @@
-/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+// stylelint-disable declaration-block-no-redundant-longhand-properties
 @mixin set-position($top, $right, $bottom, $left, $position: absolute) {
 	position: $position;
 	top: $top;

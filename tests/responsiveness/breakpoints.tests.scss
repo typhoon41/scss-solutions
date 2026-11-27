@@ -1,0 +1,76 @@
+// stylelint-disable media-feature-range-notation -- expectations mirror the min-width syntax the mixin emits
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/responsiveness/breakpoints';
+
+@include true.describe('apply-on($given-size)') {
+	@include true.it('should wrap content in min-width media query of given default breakpoint') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include breakpoints.apply-on(mobile) {
+					.box {
+						order: 1;
+					}
+				}
+
+				@include breakpoints.apply-on(4k) {
+					.box {
+						order: 2;
+					}
+				}
+			}
+			@include true.expect($selector: false) {
+				@media only screen and (min-width: 576px) {
+					.box {
+						order: 1;
+					}
+				}
+
+				@media only screen and (min-width: 1400px) {
+					.box {
+						order: 2;
+					}
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('set-up()') {
+	@include true.it('should expose the active breakpoint name through body::before content') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include breakpoints.set-up();
+			}
+			@include true.expect($selector: false) {
+				body::before {
+					content: 'mobile';
+					display: none;
+				}
+
+				@media only screen and (min-width: 768px) {
+					body::before {
+						content: 'tablet';
+					}
+				}
+
+				@media only screen and (min-width: 992px) {
+					body::before {
+						content: 'laptop';
+					}
+				}
+
+				@media only screen and (min-width: 1200px) {
+					body::before {
+						content: 'desktop';
+					}
+				}
+
+				@media only screen and (min-width: 1400px) {
+					body::before {
+						content: '4k';
+					}
+				}
+			}
+		}
+	}
+}

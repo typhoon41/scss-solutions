@@ -1,0 +1,17 @@
+@use 'sass:meta';
+@use '../../node_modules/sass-true/sass/true';
+
+@include true.describe('cursor classes') {
+	@include true.it('should mark element as clickable') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include meta.load-css('../../src/partials/core/states/cursors');
+			}
+			@include true.expect($selector: false) {
+				.clickable {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}

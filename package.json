@@ -11,6 +11,9 @@
   ],
   "style": "dist/scss-solutions.css",
   "sass": "src/main.scss",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-solutions.css",
     "lint": "stylelint --fix \"src/**/*.scss\" \"tests/**/*.scss\"",

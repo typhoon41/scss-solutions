@@ -1,4 +1,4 @@
-/* stylelint-disable-next-line annotation-no-unknown */
+// stylelint-disable-next-line annotation-no-unknown
 $breakpoints: () !default;
 
 @use 'sass:list';
@@ -17,12 +17,12 @@ $breakpoints: () !default;
 			$currentIndex: list.index($breakpoints, ($breakpoint $value));
 
 			@if $currentIndex == 1 {
-				content: string.quote($breakpoint);
+				content: string.quote('#{$breakpoint}');
 				display: none;
 			}
 			@else {
 				@include apply-on($breakpoint) {
-					content: string.quote($breakpoint);
+					content: string.quote('#{$breakpoint}');
 				}
 			}
 		}
@@ -30,7 +30,7 @@ $breakpoints: () !default;
 }
 
 @mixin apply-on($given-size) {
-	/* stylelint-disable-next-line at-rule-allowed-list */
+	// stylelint-disable-next-line at-rule-allowed-list
 	@media only screen and (min-width: -get-size($given-size)) {
 		@content;
 	}

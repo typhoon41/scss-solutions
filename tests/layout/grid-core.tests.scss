@@ -1,0 +1,54 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/layout/grid-core';
+
+@include true.describe('generate($column-prefix, $offset-prefix)') {
+	@include true.it('should generate row and auto column with given prefixes') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include grid-core.generate('column-', 'offset-');
+			}
+			@include true.expect($selector: false) {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+				}
+
+				#{'.row [class*=column-], .row [class*=offset-]'} {
+					box-sizing: border-box;
+					flex-shrink: 0;
+					max-width: 100%;
+				}
+
+				.column-auto {
+					flex: 0 0 auto;
+					width: auto;
+				}
+			}
+		}
+	}
+
+	@include true.it('should use custom prefixes') {
+		@include true.assert() {
+			@include true.output($selector: false) {
+				@include grid-core.generate('col-', 'push-');
+			}
+			@include true.expect($selector: false) {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+				}
+
+				#{'.row [class*=col-], .row [class*=push-]'} {
+					box-sizing: border-box;
+					flex-shrink: 0;
+					max-width: 100%;
+				}
+
+				.col-auto {
+					flex: 0 0 auto;
+					width: auto;
+				}
+			}
+		}
+	}
+}
